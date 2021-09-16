@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Association Rules WineC</title>
+
+    <link href="https://www.ifsc.edu.br/ifsc-internet-lf6_2-theme/images/favicon.ico" rel="Shortcut Icon">
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+        
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+<div class="mt-4 container"> 
+
+<div class="alert alert-info p-2" style='font-size:9pt' role="alert">
+Nota: Para extração de regras de associação foi utilizado o algoritmo Apriori (<a target='_blank' href='http://www.vldb.org/conf/1994/P487.PDF'>paper</a>, <a target='_blank' href='https://pt.wikipedia.org/wiki/Algoritmo_apriori'>wiki</a>) implementado no pacote <a target='_blank' href='https://pypi.org/project/apyori/'>apyori<a>. 
+    As regras foram extraídas considerando todos os dados (Geral), por campus, bem como por campus e segmento. Os parâmetros do algoritmo foram: (a) para Geral min_support=0.2, min_confidence=0.4, min_lift=1.3, max_length=2; (b) para o resto min_support=0.20, min_confidence=0.8, min_lift=2.5, max_length=2.
+</div>
+
+<table id='table' class="table table-striped table-bordered small" >
+    <thead>
+        <tr>
+            <th width="80%">Regra</th>
+            <th>Suporte do Antecedente</th>
+            <th>Confiança</th>
+            <th>Lift</th>            
+        </tr>
+    </thead>      
+</table>
+
+     
+<tbody>
+
+<button class="btn btn-outline-dark col-6 col-sm-3 col-md-2 my-2" onclick="window.history.back()">Voltar</button>
+
+</div>    
+
+</body>
+
+<!-- jQuery CDN - Slim version (=without AJAX) -->
+<script src="https://code.jquery.com/jquery-3.5.1.js" ></script>
+<!-- Data Tables JS -->
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+    
+<script>
+
+$(document).ready( function () {
+
+    $('.rule_grupo').css('font-weight','bold');
+    $('.rule_ant_perc').addClass('text-primary').css('font-weight','bold');
+    $('.rule_ant_frac').addClass('text-muted');
+    $('.rule_ant_str').addClass('text-primary').css('font-weight','bold');    
+    $('.rule_con_perc').addClass('text-info').css('font-weight','bold');
+    $('.rule_con_frac').addClass('text-muted');
+    $('.rule_con_str').addClass('text-info').css('font-weight','bold');
+
+    $('#table').DataTable({
+        "ajax" : "regras.json",
+        "columns":  [
+            {"data": "str"},
+            {"data" : "support_antecedent"},
+            {"data" : "confidence"},
+            {"data" : "lift"},
+
+        ],
+        "lengthMenu": [[6, 10, 20, -1], [6, 10, 20, "Todas"]],
+        "language": {
+            "lengthMenu": "Mostrar _MENU_ regras por página",
+            "zeroRecords": "Não foram encontradas regras para essa pesquisa",
+            "info": "Mostrando de _START_ a _END_ do total de _TOTAL_ regras",
+            "infoEmpty": "Não há regras disponíveis",
+            "thousands": " ",
+            "infoFiltered": "(filtrados do total de _MAX_ regras)",
+            "paginate": {
+                "first":      "Primeira",
+                "last":       "Última",
+                "next":       "Próxima",
+                "previous":   "Anterior"
+                }            
+            }
+    });
+
+    $('div.dataTables_length').addClass("form-inline");
+    $('div.dataTables_length select').addClass("mx-2");
+    $('div.dataTables_filter').addClass("form-inline mb-1 col-8");
+    $('div.dataTables_filter label').addClass("col-12");
+    $('div.dataTables_filter label input').addClass("col-12");    
+
+} );
+
+
+
+</script>
+
+</html>
+
+
