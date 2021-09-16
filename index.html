@@ -22,6 +22,22 @@
 
 </head>
 
+<style>
+
+.rule_grupo, .rule_ant_perc, .rule_ant_str, .rule_con_perc, .rule_con_str {
+    font-weight: bold;
+}
+
+.rule_ant_str, .rule_ant_perc{
+    color: #007bff !important;
+}
+
+.rule_con_str, .rule_con_perc{
+    color: #107d8e !important;
+}
+
+</style>
+
 <body>
 
 <div class="mt-4 container"> 
@@ -60,23 +76,14 @@ Nota: Para extração de regras de associação foi utilizado o algoritmo Aprior
 <script>
 
 $(document).ready( function () {
-
-    $('.rule_grupo').css('font-weight','bold');
-    $('.rule_ant_perc').addClass('text-primary').css('font-weight','bold');
-    $('.rule_ant_frac').addClass('text-muted');
-    $('.rule_ant_str').addClass('text-primary').css('font-weight','bold');    
-    $('.rule_con_perc').addClass('text-info').css('font-weight','bold');
-    $('.rule_con_frac').addClass('text-muted');
-    $('.rule_con_str').addClass('text-info').css('font-weight','bold');
-
+    
     $('#table').DataTable({
         "ajax" : "regras.json",
         "columns":  [
-            {"data": "str"},
+            {"data": "html"},
             {"data" : "support_antecedent"},
             {"data" : "confidence"},
             {"data" : "lift"},
-
         ],
         "lengthMenu": [[6, 10, 20, -1], [6, 10, 20, "Todas"]],
         "language": {
@@ -94,7 +101,15 @@ $(document).ready( function () {
                 }            
             }
     });
-
+    
+    $('.rule_grupo').css('font-weight','bold');
+    $('.rule_ant_perc').addClass('text-primary').css('font-weight','bold');
+    $('.rule_ant_frac').addClass('text-muted');
+    $('.rule_ant_str').addClass('text-primary').css('font-weight','bold');    
+    $('.rule_con_perc').addClass('text-info').css('font-weight','bold');
+    $('.rule_con_frac').addClass('text-muted');
+    $('.rule_con_str').addClass('text-info').css('font-weight','bold');
+    
     $('div.dataTables_length').addClass("form-inline");
     $('div.dataTables_length select').addClass("mx-2");
     $('div.dataTables_filter').addClass("form-inline mb-1 col-8");
